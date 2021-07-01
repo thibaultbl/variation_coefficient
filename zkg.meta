@@ -1,0 +1,6 @@
+[package]
+description = Implementing coefficient of variation (standard deviation / average), sort of relative standard deviation.
+script_dir = scripts
+alias = coefficient_variation variation_coefficient
+credits = T. BLANC
+tags = statistics, stats, sumstats, standard_deviation, variance
