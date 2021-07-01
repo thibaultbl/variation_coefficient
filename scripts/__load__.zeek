@@ -22,21 +22,21 @@ redef record ResultVal += {
     variation_coefficient: double &default=0.0;
 };
 
-function calc_coef_var2(rv: ResultVal)
+function calc_coef_var(rv: ResultVal)
 	{
 		rv$variation_coefficient = (rv$num > 1 && rv$average > 0.0) ? sqrt(rv$variance)/(rv$average) : 0.0;
 	}
 
 hook coef_var_hook(r: Reducer, val: double, obs: Observation, rv: ResultVal)
 	{
-	calc_coef_var2(rv);
+	calc_coef_var(rv);
 	}
 
 hook register_observe_plugins() &priority=-10
 	{
 	register_observe_plugin(VARIATION_COEFFICIENT, function(r: Reducer, val: double, obs: Observation, rv: ResultVal)
 		{
-		calc_coef_var2(rv);
+		calc_coef_var(rv);
 		});
 	add_observe_plugin_dependency(VARIATION_COEFFICIENT, VARIANCE);
 	add_observe_plugin_dependency(VARIATION_COEFFICIENT, AVERAGE);
@@ -45,6 +45,6 @@ hook register_observe_plugins() &priority=-10
 
 hook compose_resultvals_hook(result: ResultVal, rv1: ResultVal, rv2: ResultVal) &priority=-10
 	{
-	calc_coef_var2(result);
+	calc_coef_var(result);
 	}
 
